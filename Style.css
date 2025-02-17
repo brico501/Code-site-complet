@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+
+body {
+  background-color: darkblue;
+}
+nav {
+  background-color: darkblue;
+  width: 100vh;
+}
 main {
   height: 100vh;
   display: flex;
@@ -8,17 +17,31 @@ main {
 form {
   width: auto;
   height: auto;
+  color: cyan;
+  font-family: "Roboto Slab";
+  font-size: 1rem;
+  border: 20px;
 }
 input {
-  border: 2px solid gray;
+  border: 2px solid;
   width: 200px;
   height: 60px;
   border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 1.4rem;
+  color: darkcyan !important;
+  outline: none;
+  border-bottom: 3px;
 }
 input:focus {
-  border-color: blue;
+  border-radius: 20px;
+  border: 2px solid darkblue;
+  /* border-bottom: red; */
 }
 #conditon-utilisation {
   width: 20px;
   height: 20px;
+}
+input #conditon-utilisation {
+  background-color: black;
 }
