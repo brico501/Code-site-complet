@@ -1,15 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="Style.css"/>
-    <title>page d'entré</title>
+    <link rel="stylesheet" href="Style.css" />
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+      } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCqx7gThNSCMTYNKG7bfT-0mNg3YphVMeI",
+        authDomain: "mon-site-4be7b.firebaseapp.com",
+        databaseURL:
+          "https://mon-site-4be7b-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "mon-site-4be7b",
+        storageBucket: "mon-site-4be7b.firebasestorage.app",
+        messagingSenderId: "560016180451",
+        appId: "1:560016180451:web:8b37ddcaf055419d6c31d6",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      // Fonction pour envoyer les données du formulaire à Realtime Database
+      async function sendDataToRealtimeDB(event) {
+        event.preventDefault(); // Empêcher le rechargement de la page
+
+        // Récupérer les valeurs du formulaire
+        const nom = document.getElementById("nom").value;
+        const prenom = document.getElementById("prenom").value;
+        const age = document.getElementById("age").value;
+        const email = document.getElementById("email").value;
+
+        try {
+          // Envoyer les données à Realtime Database
+          const newUserRef = push(ref(db, "users"), {
+            nom: nom,
+            prenom: prenom,
+            age: age,
+            email: email,
+            timestamp: new Date().toISOString(),
+          });
+
+          console.log("Données envoyées avec ID: ", newUserRef.key);
+          alert("Données envoyées avec succès !");
+          document.getElementById("myForm").reset(); // Réinitialiser le formulaire
+        } catch (e) {
+          console.error("Erreur : ", e);
+        }
+      }
+
+      // Attacher l'événement au formulaire
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", sendDataToRealtimeDB);
+    </script>
+    <title>Page d'entrée</title>
   </head>
   <body>
     <nav></nav>
     <main>
-      <form>
+      <form id="myForm">
         <label for="nom">Nom</label><br />
         <input
           type="text"
@@ -38,11 +96,11 @@
           placeholder="Entrer votre Email"
           required
         /><br />
-        <input type="checkbox" id="conditon-utilisation" required />
-        <label for="conditon-utilisation"
+        <input type="checkbox" id="conditions-utilisation" required />
+        <label for="conditions-utilisation"
           >Valider les conditions d'utilisations</label
         ><br />
-        <input type="submit" value="Valier les réponses" />
+        <input type="submit" value="Valider les réponses" />
       </form>
     </main>
   </body>
